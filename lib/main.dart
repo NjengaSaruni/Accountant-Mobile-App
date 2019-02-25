@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Code Sample for material.AppBar.actions',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
       home: MyStatelessWidget(),
     );
@@ -61,6 +61,29 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
         _isFavorited = true;
       }
     });
+  }
+}
+
+class CrossPainter extends CustomPainter {
+  Paint _paint;
+
+  CrossPainter() {
+    _paint = Paint()
+      ..color = Colors.blue
+      ..strokeWidth = 10.0
+      ..strokeCap = StrokeCap.round;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.drawLine(Offset(0.0, 0.0), Offset(size.width, size.height), _paint);
+
+    canvas.drawLine(Offset(size.width, 0.0), Offset(0.0, size.height), _paint);
+  }
+
+  @override
+  bool shouldRepaint(CrossPainter oldDelegate) {
+    return false;
   }
 }
 
@@ -152,6 +175,7 @@ class MyStatelessWidget extends StatelessWidget {
       ),
     );
 
+
     return Scaffold(
       appBar: AppBar(
         title: Text('iSave'),
@@ -182,6 +206,11 @@ class MyStatelessWidget extends StatelessWidget {
             height: 240,
             fit: BoxFit.cover,
           ),
+          AspectRatio(
+              aspectRatio: 1.0,
+              child: Container(
+                  padding: EdgeInsets.all(32.0),
+                  child: CustomPaint(painter: CrossPainter())))
         ],
       ),
     );
